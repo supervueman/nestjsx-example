@@ -1,4 +1,5 @@
-import { Controller, Get, Query, Req, Body, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Query, Req, Body, Post, Put, Delete, Param } from '@nestjs/common';
+import { UserDTO } from './user.dto';
 
 @Controller('api/users')
 export class UserController {
@@ -8,22 +9,22 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(): string {
-    return 'User';
+  findOne(@Param('id') id: string): string {
+    return `User ${id}`;
   }
 
   @Post()
-  create(): string {
-    return 'Create user';
+  create(@Body() data: UserDTO): string {
+    return `Create user ${JSON.stringify(data)}`;
   }
 
   @Put(':id')
-  update(): string {
-    return 'Update user';
+  update(@Param('id') id: string): string {
+    return `Update user ${id}`;
   }
 
   @Delete(':id')
-  delete(): string {
-    return 'Delete user';
+  delete(@Param('id') id: string): string {
+    return `Delete user ${id}`;
   }
 }
