@@ -13,7 +13,7 @@ export class UserController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<UserDTO> {
-    return await this.userService.findOne(id);
+    return await this.userService.findOne(Number(id));
   }
 
   @Post()
@@ -23,11 +23,11 @@ export class UserController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: Partial<UserDTO>): Promise<UserDTO> {
-    return await this.userService.update(id, data);
+    return await this.userService.update(Number(id), data);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<UserDTO> {
-    return await this.userService.delete(id);
+    return await this.userService.delete(Number(id));
   }
 }
