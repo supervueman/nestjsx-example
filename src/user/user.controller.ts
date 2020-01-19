@@ -1,17 +1,28 @@
 import { Controller, Get, Query, Req, Body, Post, Put, Delete, Param } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Crud, CrudController, CrudOptions, Override, ParsedRequest, CrudRequest } from '@nestjsx/crud';
 import { UserDTO } from './user.dto';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @Crud({
   model: {
     type: User,
   },
 })
+@ApiTags('User')
 @Controller('api/users')
 export class UserController implements CrudController<User> {
   constructor(public service: UserService) { }
+
+  get base(): CrudController<User> {
+    return this;
+  }
+
+  @Override('getManyBase')
+  getManyBase(@ParsedRequest() req: CrudRequest) {
+    return this.base.getManyBase(req);
+  }
 
   // @Get()
   // async indAll(): Promise<UserDTO[]> {
