@@ -1,8 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { UserDTO } from './user.dto';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnModuleInit {
+  onModuleInit() {
+    // tslint:disable-next-line: no-console
+    console.log(`The module has been initialized.`);
+  }
+
   findAll(): UserDTO[] {
     Logger.log([{ id: '1', name: 'Rinat', email: 'supervueman@gmail.com', password: 'password' }]);
     return [{ id: '1', name: 'Rinat', email: 'supervueman@gmail.com', password: 'password' }];
