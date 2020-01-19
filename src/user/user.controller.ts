@@ -1,30 +1,33 @@
 import { Controller, Get, Query, Req, Body, Post, Put, Delete, Param } from '@nestjs/common';
 import { UserDTO } from './user.dto';
+import { UserService } from './user.service';
 
 @Controller('api/users')
 export class UserController {
+  constructor(private readonly userService: UserService) { }
+
   @Get()
-  findAll(): string {
-    return 'All users';
+  async indAll(): Promise<UserDTO[]> {
+    return await this.userService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `User ${id}`;
+  async findOne(@Param('id') id: string): Promise<UserDTO> {
+    return await this.userService.findOne(id);
   }
 
   @Post()
-  create(@Body() data: UserDTO): string {
-    return `Create user ${JSON.stringify(data)}`;
+  async create(@Body() data: UserDTO): Promise<UserDTO> {
+    return await this.userService.create(data);
   }
 
   @Put(':id')
-  update(@Param('id') id: string): string {
-    return `Update user ${id}`;
+  async update(@Param('id') id: string, @Body() data: Partial<UserDTO>): Promise<UserDTO> {
+    return await this.userService.update(id, data);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): string {
-    return `Delete user ${id}`;
+  async delete(@Param('id') id: string): Promise<UserDTO> {
+    return await this.userService.delete(id);
   }
 }
